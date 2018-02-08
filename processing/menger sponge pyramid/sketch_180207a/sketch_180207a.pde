@@ -1,8 +1,8 @@
 ArrayList<Pyramid> sponge;
 float a = 0;
 void setup() {
-  size(400, 400, P3D);
-  Pyramid b = new Pyramid(0, 0, 0, 200);
+  size(1000, 1000, P3D);
+  Pyramid b = new Pyramid(0, 0, 0, 400);
   sponge = new ArrayList<Pyramid>();
   sponge.add(b);
 }
@@ -19,11 +19,11 @@ void mousePressed() {
 void draw () {
   background(51);
   lights();
-  noStroke();
-  translate(width/2, height/2);
-  rotateX(a);
-  rotateY(a*0.7);
-  rotateZ(a*0.4);
+  stroke(255);
+  translate(width / 4, height / 4 + height / 2);
+  rotateX(a*0.6);
+  rotateY(a*0.4);
+  rotateZ(a*0.2);
   for (Pyramid b : sponge) {
     b.show();
   }

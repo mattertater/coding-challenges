@@ -4,18 +4,18 @@ PImage img;
 
 void setup() {
   size(900, 400);
-  //spots = new ArrayList<PVector>();
-  //img = loadImage("erin.png");
-  //img.loadPixels();
-  //for (int x = 0; x < img.width; x++) {
-  //  for (int y = 0; y < img.height; y++) {
-  //    int index = x + y * img.width;
-  //    color c = img.pixels[index];
-  //    float b = brightness(c);
-  //    if (b > 1)
-  //      spots.add(new PVector(x, y));
-  //  }
-  //}
+  spots = new ArrayList<PVector>();
+  img = loadImage("erin.png");
+  img.loadPixels();
+  for (int x = 0; x < img.width; x++) {
+    for (int y = 0; y < img.height; y++) {
+      int index = x + y * img.width;
+      color c = img.pixels[index];
+      float b = brightness(c);
+      if (b > 1)
+        spots.add(new PVector(x, y));
+    }
+  }
   circles = new ArrayList<Circle>();
 }
 
@@ -63,10 +63,10 @@ void draw() {
 }
 
 Circle newCircle() {
-  //int r = int(random(0, spots.size()));
-  //PVector spot = spots.get(r);
-  float x = random(width);
-  float y = random(height);
+  int r = int(random(0, spots.size()));
+  PVector spot = spots.get(r);
+  float x = spot.x;
+  float y = spot.y;
   
   boolean valid = true;
   for (Circle c: circles) {

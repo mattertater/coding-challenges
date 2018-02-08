@@ -1,16 +1,26 @@
+import peasy.*;
+
+PeasyCam cam;
+
+// start off some variables
 float a = 0;
 float offset = 0;
-int w = 24;
 float maxD;
 int r = 0, g = 0, b = 0;
 boolean redUp = true, greenUp = true, blueUp = true;
 
-int colorSpeed = 2;
+// changing these messes with the output
+int w = 64; // width of rectangles. Lower number = higher resolution
+int colorSpeed = 1; // how fast the colors change. lower is slower, higher is faster
+float rotateSpeed = 0.5; // 1 is the base. lower number is slower, higher is faster. 
 
 void setup() {
   // set size of window, using 3D
-  size(400, 400, P3D);
-  maxD = dist(0, 0, 200, 200);
+  size(1000, 1000, P3D);
+  cam = new PeasyCam(this, width / 2, width / 2, 0, 500);
+  cam.setMinimumDistance(50);
+  cam.setMaximumDistance(500);
+  maxD = dist(0, 0, width / 2, height / 2);
 }
 
 void draw() {
@@ -24,14 +34,17 @@ void draw() {
   if (b >= 240) blueUp = false; else if (b <= 30) blueUp = true;
   
   // set up the colors, angles, and lighting
-  background(50);
+  background(0);
   noStroke();
   directionalLight(r, g, b, 300, 300, 300);
   ambientLight(100, 100, 100, 600, 600, 600);
-  ortho(-300, 300, 300, -300, 0, 800);
+  ortho(-1000, 1000, 1000, -1000, -10000, 10000);
   translate(width / 2, height / 2);
-  rotateX(PI / 6);
-  rotateY(PI / 3);
+  //rotateX(PI / 6);
+  //rotateY(PI / 3);
+  rotateX(a / 4 * rotateSpeed);
+  rotateY(a / 5 * rotateSpeed);
+  rotateZ(a / 6 * rotateSpeed);
 
   // update weird lighting values
   
@@ -42,8 +55,8 @@ void draw() {
     for (int z = 0; z < height; z += w) {
       pushMatrix();
       float d = dist(x, z, width / 2, height / 2);
-      offset = map(d, 0, maxD, -PI, PI);
-      float h = map(sin(a + offset), -1, 1, 50, 200);
+      offset = map(d, 0, maxD, -TWO_PI, TWO_PI);
+      float h = map(sin(a + offset), -1, 1, 25, 600);
       translate(x - width / 2, 0, z - height / 2);
       box(w, h, w);
       popMatrix();
@@ -52,5 +65,5 @@ void draw() {
 
   // update variables and angle
   offset = 0;
-  a -= 0.05;
+  a -= 0.075;
 }
